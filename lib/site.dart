@@ -1,8 +1,10 @@
+import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
 import 'home_page.dart';
 import 'not_found_page.dart';
 import 'page.dart';
+import 'site_header.dart';
 import 'site_path.dart';
 
 /// The whole document of lewis.software at the requested path: its head and
@@ -26,10 +28,20 @@ final class Site extends AsyncStatelessComponent {
         .home => 'lewis.software',
         .notFound => 'Page not found - lewis.software',
       },
-      body: switch (page) {
-        .home => const HomePage(),
-        .notFound => const NotFoundPage(),
-      },
+      meta: {'color-scheme': 'light dark'},
+      head: [
+        link(rel: 'stylesheet', href: '/site.css'),
+        // Loaded before the body, so a theme the reader chose applies before
+        // the first paint.
+        script(src: '/theme.js'),
+      ],
+      body: .fragment([
+        const SiteHeader(),
+        switch (page) {
+          .home => const HomePage(),
+          .notFound => const NotFoundPage(),
+        },
+      ]),
     );
   }
 }

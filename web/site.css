@@ -1,0 +1,386 @@
+/* lewis.software's one stylesheet. Colours are Catppuccin's: each token holds
+   Latte for light and Mocha for dark, and the root's colour scheme picks one.
+   The scheme follows the reader's system, and `data-theme` on the root, set by
+   theme.js, overrides it. */
+
+:root {
+  color-scheme: light dark;
+  background: var(--bg);
+
+  --bg: light-dark(#eff1f5, #1e1e2e);
+  --band: light-dark(#e6e9ef, #181825);
+  --rule: light-dark(#ccd0da, #313244);
+  --text: light-dark(#4c4f69, #cdd6f4);
+  --text-soft: light-dark(#5c5f77, #bac2de);
+  --text-footer: light-dark(#5c5f77, #a6adc8);
+  --text-muted: light-dark(#6c6f85, #9399b2);
+  --link: light-dark(#8839ef, #cba6f7);
+  --link-hover: light-dark(#7287fd, #f5c2e7);
+  --peach: light-dark(#fe640b, #fab387);
+  --teal: light-dark(#179299, #94e2d5);
+
+  /* Latte's accents fail contrast as text, so in light a product's name takes
+     the text colour and keeps its accent for the rule and the tag's tint. */
+  --grit-name: light-dark(#4c4f69, #fab387);
+  --grit-tint: light-dark(rgb(254 100 11 / 0.14), rgb(250 179 135 / 0.16));
+  --muster-name: light-dark(#4c4f69, #94e2d5);
+  --muster-tint: light-dark(rgb(23 146 153 / 0.14), rgb(148 226 213 / 0.16));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+.accent {
+  color: var(--link);
+}
+
+/* Header */
+
+.site-header,
+.hero,
+.promises,
+.tools,
+.not-found,
+.site-footer {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.site-header {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.wordmark {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 15px;
+}
+
+.site-header nav a,
+#theme-toggle {
+  color: var(--text-soft);
+}
+
+#theme-toggle {
+  display: inline-flex;
+  padding: 0.25rem;
+  margin: -0.25rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  color: var(--link-hover);
+}
+
+#theme-toggle[hidden],
+#theme-toggle:not([data-next="light"]) .icon-light,
+#theme-toggle:not([data-next="dark"]) .icon-dark {
+  display: none;
+}
+
+.theme-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Main */
+
+main {
+  flex: 1 0 auto;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.lead {
+  color: var(--text-soft);
+  max-width: 34rem;
+  line-height: 1.5;
+}
+
+.hero {
+  padding-top: 6rem;
+  padding-bottom: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 1.02;
+  max-width: 14ch;
+}
+
+.hero .lead {
+  font-size: 1.3rem;
+}
+
+.band {
+  background: var(--band);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.promises {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: 3rem 5rem;
+}
+
+.promise {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.promise h2,
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.promise ul {
+  padding: 0;
+  list-style: none;
+}
+
+.promise li {
+  padding: 0.85rem 0;
+  color: var(--text-soft);
+}
+
+.promise li + li {
+  border-top: 1px solid var(--rule);
+}
+
+.mark {
+  display: inline-block;
+  width: 1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mark-always {
+  color: var(--teal);
+}
+
+.mark-never {
+  color: var(--peach);
+}
+
+.tools {
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.tools h2 {
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--text-muted);
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: 3rem 5rem;
+}
+
+.tool-grit {
+  --accent: var(--peach);
+  --name: var(--grit-name);
+  --tint: var(--grit-tint);
+}
+
+.tool-muster {
+  --accent: var(--teal);
+  --name: var(--muster-name);
+  --tint: var(--muster-tint);
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-top: 1.5rem;
+  border-top: 3px solid var(--accent);
+  color: var(--text-soft);
+}
+
+.tool h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--name);
+}
+
+.tool .summary {
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.tag {
+  padding: 0.05em 0.35em;
+  border-radius: 4px;
+  font-weight: 600;
+  background: var(--tint);
+  color: var(--name);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 15px;
+}
+
+.tool .links {
+  margin-top: 0.25rem;
+}
+
+/* Not found */
+
+.not-found {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.status {
+  color: var(--text-muted);
+}
+
+.not-found h1 {
+  font-size: clamp(2.4rem, 6vw, 4.25rem);
+  line-height: 1.05;
+  max-width: 16ch;
+}
+
+.not-found .lead {
+  font-size: 1.25rem;
+}
+
+.back {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+
+.site-footer {
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+  justify-content: space-between;
+  font-size: 15px;
+  color: var(--text-footer);
+}
+
+.footer-lead {
+  max-width: 34rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-note {
+  color: var(--text-muted);
+}
+
+/* Phone width */
+
+@media (max-width: 40rem) {
+  .hero {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
