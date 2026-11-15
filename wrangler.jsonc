@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lewis-software",
+  "compatibility_date": "2026-10-29",
+  "assets": {
+    "directory": "build/jaspr",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": false,
+  "preview_urls": false
+}

@@ -1,3 +1,5 @@
 .dart_tool/
 build/
+node_modules/
+.wrangler/
 CLAUDE.md
