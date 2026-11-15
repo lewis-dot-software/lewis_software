@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Home at phone width</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#1e1e2e}
+a{color:#cba6f7;text-decoration:none}
+a:hover{color:#f5c2e7;text-decoration:underline;text-underline-offset:3px}
+</style>
+</helmet>
+<div style="width: 390px; overflow: hidden; min-height: 100vh; background: #1e1e2e; color: #cdd6f4; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 17px; line-height: 1.6">
+
+<header style="max-width: 72rem; margin: 0 auto; padding: 1.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: baseline; justify-content: space-between; box-sizing: border-box">
+<a href="#" style="color: #cdd6f4; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em">lewis<span style="color: #cba6f7">.</span>software</a>
+<nav aria-label="Sections" style="display: flex; gap: 1.5rem; font-size: 15px">
+<a href="#tools" style="color: #bac2de">Tools</a>
+<a href="mailto:dan@lewis.software" style="color: #bac2de">Contact</a>
+</nav>
+</header>
+
+<section style="max-width: 72rem; margin: 0 auto; padding: 3.5rem 1.5rem 3.5rem; box-sizing: border-box; display: flex; flex-direction: column; gap: 1.5rem">
+<h1 style="margin: 0; font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.03em; color: #cdd6f4; max-width: 14ch">Software that respects you<span style="color: #cba6f7">.</span></h1>
+<p style="margin: 0; font-size: 1.3rem; line-height: 1.5; color: #bac2de; max-width: 34rem">Flutter apps and Dart developer tools, made with care and kept that way.</p>
+</section>
+
+<section id="promise" style="background: #181825; border-top: 1px solid #313244; border-bottom: 1px solid #313244">
+<div style="max-width: 72rem; margin: 0 auto; padding: 4rem 1.5rem; box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 3rem 5rem">
+
+<div style="display: flex; flex-direction: column; gap: 1rem">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; font-weight: 650; color: #cdd6f4"><span aria-hidden="true" style="display: inline-block; width: 1rem; font-size: 1.35rem; font-weight: 700; line-height: 1; color: #94e2d5">+</span>Always</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="padding: 0.85rem 0; border-bottom: 1px solid #313244; color: #bac2de">Says plainly what it does, and what it does with your data.</li>
+<li style="padding: 0.85rem 0; border-bottom: 1px solid #313244; color: #bac2de">Works offline, with no account, wherever it can.</li>
+<li style="padding: 0.85rem 0; color: #bac2de">Is tested well past what it strictly needs.</li>
+</ul>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 1rem">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; font-weight: 650; color: #cdd6f4"><span aria-hidden="true" style="display: inline-block; width: 1rem; font-size: 1.35rem; font-weight: 700; line-height: 1; color: #fab387">−</span>Never</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="padding: 0.85rem 0; border-bottom: 1px solid #313244; color: #bac2de">Sells your data, or collects more than it needs to work. Any crash reports and analytics are anonymous.</li>
+<li style="padding: 0.85rem 0; border-bottom: 1px solid #313244; color: #bac2de">Tricks you with dark patterns to keep you hooked or paying.</li>
+<li style="padding: 0.85rem 0; color: #bac2de">Ships AI-written code without thorough human review.</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section id="tools" style="max-width: 72rem; margin: 0 auto; padding: 5rem 1.5rem 4rem; box-sizing: border-box; display: flex; flex-direction: column; gap: 2.5rem">
+<h2 style="margin: 0; font-size: 1rem; font-weight: 650; color: #9399b2">Tools</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 3rem 5rem">
+
+<article style="display: flex; flex-direction: column; gap: 0.9rem; padding-top: 1.5rem; border-top: 3px solid #fab387">
+<h3 style="margin: 0; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #fab387">grit</h3>
+<p style="margin: 0; font-size: 1.15rem; color: #cdd6f4">Property-based testing for Dart.</p>
+<p style="margin: 0; color: #bac2de">Say what should hold for every input. <span style="padding: 0.05em 0.35em; border-radius: 4px; font-weight: 600; background: rgba(250, 179, 135, 0.16); color: #fab387">grit</span> finds an input that breaks it, then shrinks it to the smallest case that still fails, so the bug is plain to see. Its shrinker is checked against a model proved in Lean.</p>
+<p style="margin: 0.25rem 0 0; display: flex; gap: 1.25rem; font-size: 15px"><a href="https://github.com/lewis-dot-software/grit">Source</a><a href="https://pub.dev/packages/grit">pub.dev</a></p>
+</article>
+
+<article style="display: flex; flex-direction: column; gap: 0.9rem; padding-top: 1.5rem; border-top: 3px solid #94e2d5">
+<h3 style="margin: 0; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #94e2d5">muster</h3>
+<p style="margin: 0; font-size: 1.15rem; color: #cdd6f4">Real codebases to test your Dart tools against.</p>
+<p style="margin: 0; color: #bac2de">Pin the projects your tool gets tested against, and <span style="padding: 0.05em 0.35em; border-radius: 4px; font-weight: 600; background: rgba(148, 226, 213, 0.16); color: #94e2d5">muster</span> brings each one to that commit, resolved and ready to read. Your tool is then tested on real code people wrote, and every run sees exactly the same code.</p>
+<p style="margin: 0.25rem 0 0; display: flex; gap: 1.25rem; font-size: 15px"><a href="https://github.com/lewis-dot-software/muster">Source</a><a href="https://pub.dev/packages/muster">pub.dev</a></p>
+</article>
+
+</div>
+</section>
+
+<footer style="max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem; box-sizing: border-box; border-top: 1px solid #313244; display: flex; flex-wrap: wrap; gap: 1rem 3rem; justify-content: space-between; font-size: 15px; color: #a6adc8">
+<div style="display: flex; flex-direction: column; gap: 0.35rem; max-width: 34rem">
+<p style="margin: 0">lewis.software is run by Dan Lewis, who builds, tests and signs every release.</p>
+<p style="margin: 0">Say hello at <a href="mailto:dan@lewis.software">dan@lewis.software</a>.</p>
+</div>
+<p style="margin: 0; color: #9399b2">No cookies, no tracking, nothing loaded from anyone else. <a href="https://github.com/lewis-dot-software/lewis_software">This site's source</a>.</p>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2900}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
