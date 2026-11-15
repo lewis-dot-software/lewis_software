@@ -30,12 +30,11 @@ Map<String, String> _directives(String policy, String separator) => {
       match.group(1)!: match.group(2)!,
 };
 
-/// Every feature MDN's Permissions-Policy reference lists.
+/// Every feature MDN's Permissions-Policy reference lists that Chrome
+/// recognises.
 const List<String> _features = [
   'accelerometer',
-  'ambient-light-sensor',
   'aria-notify',
-  'attribution-reporting',
   'autoplay',
   'bluetooth',
   'browsing-topics',
@@ -85,6 +84,13 @@ const List<String> _features = [
   'xr-spatial-tracking',
 ];
 
+/// The features MDN's Permissions-Policy reference lists that Chrome logs as
+/// unrecognised, an error in the console of every page that names one.
+const List<String> _unrecognisedByChrome = [
+  'ambient-light-sensor',
+  'attribution-reporting',
+];
+
 void main() {
   final Map<String, String> headers = _everyPathHeaders();
 
@@ -115,12 +121,22 @@ void main() {
     expect(headers['referrer-policy'], 'no-referrer');
   });
 
-  test('the permissions policy denies every feature MDN lists', () {
+  group('the permissions policy', () {
     final Map<String, String> permissions = _directives(
       headers['permissions-policy']!,
       ',',
     );
-    expect(permissions.keys, containsAll(_features));
-    expect(permissions.values, everyElement('()'));
+
+    test('denies every feature MDN lists that Chrome recognises', () {
+      expect(permissions.keys, containsAll(_features));
+      expect(permissions.values, everyElement('()'));
+    });
+
+    test('names no feature Chrome does not recognise', () {
+      expect(
+        permissions.keys,
+        everyElement(isNot(isIn(_unrecognisedByChrome))),
+      );
+    });
   });
 }
