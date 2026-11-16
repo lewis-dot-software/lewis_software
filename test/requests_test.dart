@@ -4,6 +4,10 @@ import 'package:lewis_software/page.dart';
 
 import 'rendered_page.dart';
 
+/// A URL the browser fetches: [url], and [by], what fetches it, the page or
+/// the site's own file that writes it.
+typedef _Fetch = ({Uri url, String by});
+
 /// The attributes through which an element has the browser fetch a URL, by
 /// the element's tag.
 const Map<String, List<String>> _fetchingAttributes = {
@@ -74,15 +78,16 @@ void main() {
       // Each own file is read in turn for what it fetches, so a fetch nested
       // at any depth is checked.
       final Set<Uri> read = {};
-      final List<(Uri, String)> queue = [
-        for (final Uri url in fetched) (url, '$page'),
+      final List<_Fetch> queue = [
+        for (final Uri url in fetched) (url: url, by: '$page'),
       ];
       while (queue.isNotEmpty) {
-        final (Uri url, String by) = queue.removeLast();
+        final (:Uri url, :String by) = queue.removeLast();
         expect(isOwn(url), isTrue, reason: '$by fetches $url');
         if (read.add(url.removeFragment())) {
           queue.addAll([
-            for (final Uri inner in _fetchedByFile(url)) (inner, '$url'),
+            for (final Uri inner in _fetchedByFile(url))
+              (url: inner, by: '$url'),
           ]);
         }
       }

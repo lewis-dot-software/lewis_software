@@ -15,6 +15,21 @@ import 'package:lewis_software/topic.dart';
 
 import 'rendered_page.dart';
 
+/// A topic's radio: its [type], and its [value], the words it sends.
+typedef _Radio = ({String? type, String? value});
+
+/// A path of the logo: its [className], which names its stroke, and its
+/// [d], the stroke's shape.
+typedef _Stroke = ({String className, String? d});
+
+/// A link of the header's: its [text], and its [ariaCurrent], what it is
+/// current as.
+typedef _Current = ({String text, String? ariaCurrent});
+
+/// An icon of the theme toggle: its [className], which names the theme it
+/// switches to, and its [ariaHidden], whether assistive technology skips it.
+typedef _Icon = ({String className, String? ariaHidden});
+
 /// Every `href` the links in [element] lead to, in document order.
 List<String> _hrefs(Element element) => [
   for (final Element link in element.querySelectorAll('a[href]'))
@@ -249,11 +264,14 @@ void main() {
     final List<Element> radios = (await rendered(.contact))
         .querySelectorAll('input[name="${Topic.fieldName}"]');
     expect(
-      [
+      <_Radio>[
         for (final Element radio in radios)
-          (radio.attributes['type'], radio.attributes['value']),
+          (type: radio.attributes['type'], value: radio.attributes['value']),
       ],
-      [for (final Topic topic in Topic.values) ('radio', topic.label)],
+      <_Radio>[
+        for (final Topic topic in Topic.values)
+          (type: 'radio', value: topic.label),
+      ],
     );
     expect(
       radios.where((radio) => radio.attributes.containsKey('required')),
@@ -346,13 +364,13 @@ void main() {
           Logo.viewBox,
         );
         expect(
-          [
+          <_Stroke>[
             for (final Element stroke in logo.querySelectorAll('path'))
-              (stroke.className, stroke.attributes['d']),
+              (className: stroke.className, d: stroke.attributes['d']),
           ],
-          [
+          <_Stroke>[
             for (final LogoStroke stroke in LogoStroke.values)
-              ('logo-${stroke.name}', stroke.path),
+              (className: 'logo-${stroke.name}', d: stroke.path),
           ],
         );
       },
@@ -378,11 +396,13 @@ void main() {
           .singleWhere((Element link) => link.text == 'Contact');
       expect(contact.attributes['href'], Page.contact.path.value);
       expect(
-        [
+        <_Current>[
           for (final Element link in nav.querySelectorAll('[aria-current]'))
-            (link.text, link.attributes['aria-current']),
+            (text: link.text, ariaCurrent: link.attributes['aria-current']),
         ],
-        [if (page == .contact) ('Contact', 'page')],
+        <_Current>[
+          if (page == .contact) (text: 'Contact', ariaCurrent: 'page'),
+        ],
       );
     });
 
@@ -402,11 +422,17 @@ void main() {
       expect(toggle.attributes['aria-label'], isNotEmpty);
       expect(toggle.text.trim(), isEmpty);
       expect(
-        [
+        <_Icon>[
           for (final Element icon in toggle.querySelectorAll('svg'))
-            (icon.className, icon.attributes['aria-hidden']),
+            (
+              className: icon.className,
+              ariaHidden: icon.attributes['aria-hidden'],
+            ),
         ],
-        [('theme-icon icon-light', 'true'), ('theme-icon icon-dark', 'true')],
+        <_Icon>[
+          (className: 'theme-icon icon-light', ariaHidden: 'true'),
+          (className: 'theme-icon icon-dark', ariaHidden: 'true'),
+        ],
       );
     });
   }

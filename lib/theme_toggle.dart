@@ -1,6 +1,10 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
+/// A ray of the sun: a line from ([x1], [y1]), its inner end, to ([x2],
+/// [y2]), its outer, in the icon's 24 by 24 view box.
+typedef _Ray = ({String x1, String y1, String x2, String y2});
+
 /// The button that switches the page between light and dark: a sun that
 /// switches to light, and a moon that switches to dark, one shown at a time.
 ///
@@ -25,8 +29,8 @@ final class ThemeToggle extends StatelessComponent {
         attributes: {'aria-hidden': 'true', 'focusable': 'false'},
         [
           circle(cx: '12', cy: '12', r: '4', []),
-          for (final (String x1, String y1, String x2, String y2) in _rays)
-            line(x1: x1, y1: y1, x2: x2, y2: y2, []),
+          for (final _Ray ray in _rays)
+            line(x1: ray.x1, y1: ray.y1, x2: ray.x2, y2: ray.y2, []),
         ],
       ),
       svg(
@@ -38,15 +42,15 @@ final class ThemeToggle extends StatelessComponent {
     ],
   );
 
-  /// The sun's eight rays, each from its inner end to its outer.
-  static const List<(String, String, String, String)> _rays = [
-    ('12', '2.5', '12', '4.5'),
-    ('12', '19.5', '12', '21.5'),
-    ('2.5', '12', '4.5', '12'),
-    ('19.5', '12', '21.5', '12'),
-    ('5.3', '5.3', '6.7', '6.7'),
-    ('17.3', '17.3', '18.7', '18.7'),
-    ('5.3', '18.7', '6.7', '17.3'),
-    ('17.3', '6.7', '18.7', '5.3'),
+  /// The sun's eight rays.
+  static const List<_Ray> _rays = [
+    (x1: '12', y1: '2.5', x2: '12', y2: '4.5'),
+    (x1: '12', y1: '19.5', x2: '12', y2: '21.5'),
+    (x1: '2.5', y1: '12', x2: '4.5', y2: '12'),
+    (x1: '19.5', y1: '12', x2: '21.5', y2: '12'),
+    (x1: '5.3', y1: '5.3', x2: '6.7', y2: '6.7'),
+    (x1: '17.3', y1: '17.3', x2: '18.7', y2: '18.7'),
+    (x1: '5.3', y1: '18.7', x2: '6.7', y2: '17.3'),
+    (x1: '17.3', y1: '6.7', x2: '18.7', y2: '5.3'),
   ];
 }
