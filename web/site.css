@@ -13,9 +13,9 @@
   --text: light-dark(#4c4f69, #cdd6f4);
   --text-soft: light-dark(#5c5f77, #bac2de);
   --text-footer: light-dark(#5c5f77, #a6adc8);
-  --text-muted: light-dark(#6c6f85, #9399b2);
+  --text-muted: light-dark(#5c5f77, #9399b2);
   --link: light-dark(#8839ef, #cba6f7);
-  --link-hover: light-dark(#7287fd, #f5c2e7);
+  --link-hover: light-dark(#4c4f69, #f5c2e7);
   --peach: light-dark(#fe640b, #fab387);
   --teal: light-dark(#179299, #94e2d5);
   --red: light-dark(#d20f39, #f38ba8);
@@ -31,6 +31,16 @@
   --muster-tint: light-dark(rgb(23 146 153 / 0.14), rgb(148 226 213 / 0.16));
   --lavender-name: light-dark(#4c4f69, #b4befe);
   --lavender-tint: light-dark(rgb(114 135 253 / 0.16), rgb(180 190 254 / 0.16));
+
+  /* Mauve and red fall under 4.5:1 on a mantle panel, so in light a link on
+     one takes the text colour under a mauve underline, and the alert's title
+     the text colour inside its red border. */
+  --panel-link: light-dark(#4c4f69, #cba6f7);
+  --alert-title: light-dark(#4c4f69, #f38ba8);
+
+  /* Latte's peach falls under 3:1 even as large text, so in light the Never
+     mark takes maroon. */
+  --never: light-dark(#e64553, #fab387);
 }
 
 :root[data-theme="light"] {
@@ -287,7 +297,7 @@ h1 {
 }
 
 .mark-never {
-  color: var(--peach);
+  color: var(--never);
 }
 
 .tools {
@@ -426,6 +436,18 @@ h1 {
   border-radius: 8px;
 }
 
+.panel a {
+  color: var(--panel-link);
+  text-decoration: underline;
+  text-decoration-color: var(--link);
+  text-underline-offset: 3px;
+}
+
+.panel a:hover {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -446,7 +468,7 @@ h1 {
 .alert-title {
   font-size: 17px;
   font-weight: 650;
-  color: var(--red);
+  color: var(--alert-title);
 }
 
 .topics {
