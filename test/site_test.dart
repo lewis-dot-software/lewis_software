@@ -2,6 +2,8 @@ import 'package:html/dom.dart';
 import 'package:jaspr_test/server_test.dart';
 import 'package:lewis_software/elsewhere.dart';
 import 'package:lewis_software/home_page.dart';
+import 'package:lewis_software/logo.dart';
+import 'package:lewis_software/logo_stroke.dart';
 import 'package:lewis_software/page.dart';
 import 'package:lewis_software/site.dart';
 import 'package:lewis_software/theme_toggle.dart';
@@ -163,6 +165,59 @@ void main() {
         containsPair('hidden', ''),
       );
     });
+
+    test("the $page page names the site's own icon", () async {
+      final List<Element> icons = (await rendered(page))
+          .querySelectorAll('link[rel="icon"]');
+      expect(
+        [for (final Element icon in icons) icon.attributes['href']],
+        ['/favicon.svg'],
+      );
+      expect(icons.single.attributes['type'], 'image/svg+xml');
+      expect(
+        servedFile(siteOrigin.resolve('/favicon.svg')).existsSync(),
+        isTrue,
+      );
+    });
+
+    test(
+      "the $page page's header leads with the ls logo, hidden from "
+      'assistive technology, inside the wordmark that names the site',
+      () async {
+        final Element wordmark = (await rendered(page))
+            .querySelector('header a.wordmark')!;
+        expect(wordmark.children.last.text, 'lewis.software');
+        final Element logo = wordmark.children.first;
+        expect(logo.localName, 'svg');
+        expect(logo.attributes, containsPair('aria-hidden', 'true'));
+        expect(
+          logo.attributes['viewbox'] ?? logo.attributes['viewBox'],
+          Logo.viewBox,
+        );
+        expect(
+          [
+            for (final Element stroke in logo.querySelectorAll('path'))
+              (stroke.className, stroke.attributes['d']),
+          ],
+          [
+            for (final LogoStroke stroke in LogoStroke.values)
+              ('logo-${stroke.name}', stroke.path),
+          ],
+        );
+      },
+    );
+
+    test(
+      "the $page page's footer ends on the logo, centred as a stamp",
+      () async {
+        final Element footer = (await rendered(page)).querySelector('footer')!;
+        final Element stamp = footer.children.last;
+        expect(stamp.className, 'stamp');
+        expect(stamp.children.map((Element child) => child.className), [
+          'logo',
+        ]);
+      },
+    );
 
     test("the $page page's theme toggle is a sun and a moon, named for "
         'assistive technology', () async {

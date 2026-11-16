@@ -4,6 +4,7 @@ import 'package:jaspr/server.dart';
 import 'contact_line.dart';
 import 'mark.dart';
 import 'page.dart';
+import 'stamp.dart';
 
 /// The body of the page saying no page stands at the reader's path.
 final class NotFoundPage extends StatelessComponent {
@@ -28,6 +29,6 @@ final class NotFoundPage extends StatelessComponent {
         a(href: Page.home.path.value, [.text('Back to the home page')]),
       ]),
     ]),
-    footer(classes: 'site-footer', [const ContactLine()]),
+    footer(classes: 'site-footer', [const ContactLine(), const Stamp()]),
   ]);
 }

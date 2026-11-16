@@ -5,6 +5,7 @@ import 'contact_line.dart';
 import 'elsewhere.dart';
 import 'promise.dart';
 import 'promise_column.dart';
+import 'stamp.dart';
 import 'tool.dart';
 import 'tool_article.dart';
 
@@ -63,6 +64,7 @@ final class HomePage extends StatelessComponent {
         a(href: Elsewhere.siteSource.href, [.text("This site's source")]),
         .text('.'),
       ]),
+      const Stamp(),
     ]),
   ]);
 }

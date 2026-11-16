@@ -41,16 +41,22 @@ List<Uri> _fetchedByElements(Document document, Page page) => [
             siteOrigin.resolve(page.path.value).resolve(url),
 ];
 
-/// A URL written in a stylesheet or a script: absolute with a scheme or
-/// protocol-relative, a CSS `url()`, or a CSS `@import`'s string.
+/// A URL written in a stylesheet, a script or an image: absolute with a
+/// scheme or protocol-relative, a CSS `url()`, or a CSS `@import`'s string.
 final RegExp _urlInFile = RegExp(
   r'''([a-z][a-z0-9+.-]*:)?//[^\s'"`)]+|url\(\s*['"]?([^'")\s]+)|@import\s+['"]([^'"]+)''',
   caseSensitive: false,
 );
 
+/// An XML namespace declaration, whose URI names the namespace and is never
+/// fetched.
+final RegExp _namespace = RegExp(
+  r'''\sxmlns(:[a-z][\w.-]*)?\s*=\s*("[^"]*"|'[^']*')''',
+);
+
 /// Every URL a file the site serves at [url] writes, resolved against [url].
 Iterable<Uri> _fetchedByFile(Uri url) => _urlInFile
-    .allMatches(servedFile(url).readAsStringSync())
+    .allMatches(servedFile(url).readAsStringSync().replaceAll(_namespace, ''))
     .map(
       (RegExpMatch match) =>
           url.resolve(match.group(2) ?? match.group(3) ?? match.group(0)!),

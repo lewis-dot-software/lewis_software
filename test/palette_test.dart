@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 import 'package:test/test.dart';
 
 /// Catppuccin Latte, the light flavour, as hex.
@@ -49,6 +51,22 @@ String _hex(String colour) {
 
 void main() {
   final String css = File('web/site.css').readAsStringSync();
+
+  test("every colour in the site's icon is Mocha's", () {
+    final Document icon = parse(File('web/favicon.svg').readAsStringSync());
+    // Its colours are presentation attributes alone, so a keyword or a
+    // style cannot carry one past the check.
+    expect(icon.querySelectorAll('style, [style]'), isEmpty);
+    final List<String> colours = [
+      for (final Element element in icon.querySelectorAll('*'))
+        for (final String paint in ['fill', 'stroke'])
+          if (element.attributes[paint] case final String colour
+              when colour != 'none')
+            colour.toLowerCase(),
+    ];
+    expect(colours, isNotEmpty);
+    expect(colours, everyElement(isIn(_mocha)));
+  });
 
   test('every colour token takes Latte for light and Mocha for dark', () {
     final List<RegExpMatch> pairs = _pair.allMatches(css).toList();

@@ -30,6 +30,8 @@ final class Site extends AsyncStatelessComponent {
       },
       meta: {'color-scheme': 'light dark'},
       head: [
+        // Declared, so a browser fetches it in place of `/favicon.ico`.
+        link(rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml'),
         link(rel: 'stylesheet', href: '/site.css'),
         // Loaded before the body, so a theme the reader chose applies before
         // the first paint.
