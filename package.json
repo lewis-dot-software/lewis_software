@@ -2,6 +2,7 @@
   "name": "lewis_software",
   "private": true,
   "scripts": {
+    "build": "mkdir -p build && DART_DATA_HOME=tool dart run jaspr_cli:jaspr build && rm -r build/jaspr/packages build/jaspr/.dart_tool build/jaspr/.build.manifest",
     "dev": "wrangler dev",
     "dry-run": "wrangler deploy --dry-run",
     "test": "node --test \"test/*.test.mjs\""
