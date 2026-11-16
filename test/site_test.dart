@@ -63,15 +63,16 @@ void main() {
     },
   );
 
-  test('the home page links the org, the publisher and each tool', () async {
+  test('the home page links the org, the publisher while a tool is on '
+      'pub.dev, and each tool', () async {
     final Document home = await rendered(.home);
     final Element footerLead = home.querySelector('footer .footer-lead')!;
     expect(_hrefs(footerLead), [
       Elsewhere.githubOrg.href,
-      Elsewhere.pubPublisher.href,
+      if (Tool.anyOnPub) Elsewhere.pubPublisher.href,
     ]);
     expect(_hrefs(home.querySelector('main #${HomePage.toolsId}')!), [
-      for (final Tool tool in Tool.values) ...[tool.source, tool.package],
+      for (final Tool tool in Tool.values) ...[tool.source, ?tool.package],
     ]);
   });
 

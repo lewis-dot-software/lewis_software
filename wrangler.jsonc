@@ -3,6 +3,7 @@
   "name": "lewis-software",
   "main": "worker/index.js",
   "compatibility_date": "2026-10-29",
+  "routes": [{ "pattern": "lewis.software", "custom_domain": true }],
   "assets": {
     "directory": "build/jaspr",
     "binding": "ASSETS",

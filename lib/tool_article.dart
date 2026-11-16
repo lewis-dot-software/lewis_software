@@ -23,7 +23,8 @@ final class ToolArticle extends StatelessComponent {
         ]),
         p(classes: 'links', [
           a(href: tool.source, [.text('Source')]),
-          a(href: tool.package, [.text('pub.dev')]),
+          if (tool.package case final String package)
+            a(href: package, [.text('pub.dev')]),
         ]),
       ]);
 }

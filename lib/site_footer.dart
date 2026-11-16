@@ -3,6 +3,7 @@ import 'package:jaspr/server.dart';
 
 import 'elsewhere.dart';
 import 'stamp.dart';
+import 'tool.dart';
 
 /// The footer of a page with words of its own: who runs the site, where its
 /// work is published, what the site gathers, and the stamp.
@@ -21,7 +22,8 @@ final class SiteFooter extends StatelessComponent {
       ]),
       p(classes: 'links', [
         a(href: Elsewhere.githubOrg.href, [.text('GitHub')]),
-        a(href: Elsewhere.pubPublisher.href, [.text('pub.dev')]),
+        if (Tool.anyOnPub)
+          a(href: Elsewhere.pubPublisher.href, [.text('pub.dev')]),
       ]),
     ]),
     p(classes: 'footer-note', [
