@@ -18,6 +18,10 @@
   --link-hover: light-dark(#7287fd, #f5c2e7);
   --peach: light-dark(#fe640b, #fab387);
   --teal: light-dark(#179299, #94e2d5);
+  --red: light-dark(#d20f39, #f38ba8);
+  --red-tint: light-dark(rgb(210 15 57 / 0.08), rgb(243 139 168 / 0.1));
+  --field-border: light-dark(#6c6f85, #7f849c);
+  --on-link: light-dark(#eff1f5, #11111b);
 
   /* Latte's accents fail contrast as text, so in light a product's name takes
      the text colour and keeps its accent for the rule and the tag's tint. */
@@ -25,6 +29,8 @@
   --grit-tint: light-dark(rgb(254 100 11 / 0.14), rgb(250 179 135 / 0.16));
   --muster-name: light-dark(#4c4f69, #94e2d5);
   --muster-tint: light-dark(rgb(23 146 153 / 0.14), rgb(148 226 213 / 0.16));
+  --lavender-name: light-dark(#4c4f69, #b4befe);
+  --lavender-tint: light-dark(rgb(114 135 253 / 0.16), rgb(180 190 254 / 0.16));
 }
 
 :root[data-theme="light"] {
@@ -39,6 +45,11 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Hidden means hidden, whatever display a rule gives the element. */
+[hidden] {
+  display: none !important;
 }
 
 body {
@@ -86,6 +97,7 @@ a:hover {
 .hero,
 .promises,
 .tools,
+.contact,
 .not-found,
 .site-footer {
   width: 100%;
@@ -143,6 +155,14 @@ a:hover {
 .site-header nav a,
 #theme-toggle {
   color: var(--text-soft);
+}
+
+.site-header nav a[aria-current="page"] {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--link);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 #theme-toggle {
@@ -343,6 +363,237 @@ h1 {
   margin-top: 0.25rem;
 }
 
+/* Contact */
+
+.contact {
+  padding-top: 4.5rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem 5rem;
+  align-items: flex-start;
+  /* Stacked, the words and the form keep together, however tall the page. */
+  align-content: flex-start;
+}
+
+.contact-words {
+  flex: 1 1 22rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact h1 {
+  font-size: clamp(2.4rem, 6vw, 4.25rem);
+  line-height: 1.05;
+}
+
+.contact .lead {
+  font-size: 1.2rem;
+}
+
+.contact-rows {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-row {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: var(--text-soft);
+}
+
+.contact-row h2 {
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--text);
+}
+
+.contact-reply {
+  flex: 1.3 1 26rem;
+  min-width: 0;
+}
+
+.panel {
+  padding: 2rem;
+  background: var(--band);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.alert {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  background: var(--red-tint);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 15px;
+}
+
+.alert-title {
+  font-size: 17px;
+  font-weight: 650;
+  color: var(--red);
+}
+
+.topics {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.topics legend {
+  padding: 0;
+  margin-bottom: 0.6rem;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.tag-optional {
+  --name: var(--lavender-name);
+  --tint: var(--lavender-tint);
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.55rem;
+  font-size: 13px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--field-border);
+  border-radius: 999px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.chip:has(input:checked) {
+  border-color: var(--link);
+}
+
+.chip input {
+  margin: 0;
+  accent-color: var(--link);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  gap: 1.4rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline-offset: 1px;
+  border-color: var(--link);
+}
+
+.hint {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* The hint reads as the pair's, closer to it than the form's gap. */
+.pair + .hint {
+  margin-top: -0.9rem;
+}
+
+.send {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+#contact-send {
+  min-height: 48px;
+  padding: 0 1.5rem;
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 650;
+  color: var(--on-link);
+  background: var(--link);
+  cursor: pointer;
+}
+
+#contact-send:hover {
+  background: var(--link-hover);
+}
+
+#contact-send:disabled {
+  cursor: progress;
+}
+
+.sent {
+  padding: 2.5rem 2rem;
+  border-top: 3px solid var(--teal);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--text-soft);
+}
+
+.sent h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.sent .links {
+  margin-top: 0.5rem;
+}
+
 /* Not found */
 
 .not-found {
@@ -416,5 +667,23 @@ h1 {
   .hero {
     padding-top: 3.5rem;
     padding-bottom: 3.5rem;
+  }
+
+  .contact {
+    padding-top: 2.5rem;
+    padding-bottom: 3.5rem;
+    gap: 2.5rem;
+  }
+
+  .contact .lead {
+    font-size: 1.1rem;
+  }
+
+  .panel {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .send {
+    align-items: stretch;
   }
 }

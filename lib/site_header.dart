@@ -1,7 +1,6 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
-import 'elsewhere.dart';
 import 'home_page.dart';
 import 'logo.dart';
 import 'page.dart';
@@ -10,8 +9,11 @@ import 'theme_toggle.dart';
 /// The site's header: the wordmark led by the logo, then the sections' links
 /// and the theme toggle.
 final class SiteHeader extends StatelessComponent {
-  /// The site's header.
-  const SiteHeader({super.key});
+  /// The header of [current].
+  const SiteHeader(this.current, {super.key});
+
+  /// The page the header stands on, whose own link is marked as current.
+  final Page current;
 
   @override
   Component build(BuildContext context) => header(classes: 'site-header', [
@@ -31,7 +33,11 @@ final class SiteHeader extends StatelessComponent {
         a(href: '${Page.home.path.value}#${HomePage.toolsId}', [
           .text('Tools'),
         ]),
-        a(href: Elsewhere.email.href, [.text('Contact')]),
+        a(
+          href: Page.contact.path.value,
+          attributes: {if (current == .contact) 'aria-current': 'page'},
+          [.text('Contact')],
+        ),
         const ThemeToggle(),
       ],
     ),

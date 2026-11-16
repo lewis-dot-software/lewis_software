@@ -5,6 +5,9 @@ enum Page {
   /// The home page.
   home(path: SitePath('/')),
 
+  /// The page whose form sends Dan a message.
+  contact(path: SitePath('/contact')),
+
   /// The page saying no page stands at the reader's path.
   notFound(path: SitePath('/404.html'));
 

@@ -1,7 +1,6 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
-import 'contact_line.dart';
 import 'mark.dart';
 import 'page.dart';
 import 'stamp.dart';
@@ -29,6 +28,6 @@ final class NotFoundPage extends StatelessComponent {
         a(href: Page.home.path.value, [.text('Back to the home page')]),
       ]),
     ]),
-    footer(classes: 'site-footer', [const ContactLine(), const Stamp()]),
+    footer(classes: 'site-footer', [const Stamp()]),
   ]);
 }

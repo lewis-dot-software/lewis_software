@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
+import 'contact_page.dart';
 import 'home_page.dart';
 import 'not_found_page.dart';
 import 'page.dart';
@@ -26,6 +27,7 @@ final class Site extends AsyncStatelessComponent {
       lang: 'en-GB',
       title: switch (page) {
         .home => 'lewis.software',
+        .contact => 'Contact - lewis.software',
         .notFound => 'Page not found - lewis.software',
       },
       meta: {'color-scheme': 'light dark'},
@@ -36,11 +38,13 @@ final class Site extends AsyncStatelessComponent {
         // Loaded before the body, so a theme the reader chose applies before
         // the first paint.
         script(src: '/theme.js'),
+        if (page == .contact) script(src: '/contact.js', defer: true),
       ],
       body: .fragment([
-        const SiteHeader(),
+        SiteHeader(page),
         switch (page) {
           .home => const HomePage(),
+          .contact => const ContactPage(),
           .notFound => const NotFoundPage(),
         },
       ]),

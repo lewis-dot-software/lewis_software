@@ -1,13 +1,17 @@
 import 'package:html/dom.dart';
 import 'package:jaspr_test/server_test.dart';
+import 'package:lewis_software/contact_field.dart';
+import 'package:lewis_software/contact_form.dart';
 import 'package:lewis_software/elsewhere.dart';
 import 'package:lewis_software/home_page.dart';
 import 'package:lewis_software/logo.dart';
 import 'package:lewis_software/logo_stroke.dart';
 import 'package:lewis_software/page.dart';
+import 'package:lewis_software/sent_panel.dart';
 import 'package:lewis_software/site.dart';
 import 'package:lewis_software/theme_toggle.dart';
 import 'package:lewis_software/tool.dart';
+import 'package:lewis_software/topic.dart';
 
 import 'rendered_page.dart';
 
@@ -44,13 +48,10 @@ void main() {
     },
   );
 
-  test("the home page gives Dan's email and links the org, the publisher and "
-      'each tool', () async {
+  test('the home page links the org, the publisher and each tool', () async {
     final Document home = await rendered(.home);
     final Element footerLead = home.querySelector('footer .footer-lead')!;
-    expect(footerLead.text, contains(emailAddress));
     expect(_hrefs(footerLead), [
-      Elsewhere.email.href,
       Elsewhere.githubOrg.href,
       Elsewhere.pubPublisher.href,
     ]);
@@ -108,7 +109,6 @@ void main() {
           'same code.',
       'lewis.software is run by Dan Lewis, who builds, tests and signs every '
           'release.',
-      'Say hello at dan@lewis.software.',
       "No cookies, no tracking, nothing loaded from anyone else. This site's "
           'source.',
     ]);
@@ -121,7 +121,158 @@ void main() {
       "The page you were after isn't on lewis.software. It may have moved, or "
           'the link may have a typo.',
       'Back to the home page',
-      'Say hello at dan@lewis.software.',
+    ]);
+  });
+
+  testServer('the site renders the contact page at /contact', (tester) async {
+    tester.pumpComponent(const Site());
+    final DocumentResponse response = await tester.request('/contact');
+    expect(response.statusCode, 200);
+    expect(response.document?.documentElement?.attributes['lang'], 'en-GB');
+    expect(
+      response.document?.querySelector('title')?.text,
+      'Contact - lewis.software',
+    );
+    expect(response.document?.querySelector('main h1')?.text, 'Get in touch.');
+  });
+
+  test("the contact page's words are candidate B's, in order", () async {
+    expect(_words(await rendered(.contact)), [
+      'Get in touch.',
+      'A question about a tool, a bug you have found, or an app you would '
+          'like built. Every message is read and answered by an actual human '
+          '(me, Dan 👋).',
+      'Want an app or website built?',
+      'Apps and websites made to order, for phones, computers and the web. '
+          'Secure, thoroughly tested, respectful of the people who use them, '
+          'and built to be easy to look after for years.',
+      'Email, and nothing else',
+      'No social media, so email is the only way to get in touch.',
+      'Prefer your own mail?',
+      'Write to dan@lewis.software.',
+      'Your message did not send.',
+      'Everything you wrote is still here. Try again in a moment, or write to '
+          'dan@lewis.software.',
+      'Your name and email are for the reply, nothing else.',
+      'Sent by email, with nothing kept on this site.',
+      'Message sent.',
+      "Thanks for your message. I'll get back to you as soon as possible.",
+      'lewis.software is run by Dan Lewis, who builds, tests and signs every '
+          'release.',
+      "No cookies, no tracking, nothing loaded from anyone else. This site's "
+          'source.',
+    ]);
+  });
+
+  test("the contact form's controls are candidate B's, in order", () async {
+    final Element form = (await rendered(.contact))
+        .getElementById(ContactForm.id)!;
+    expect(
+      form.querySelector('legend')!.text.replaceAll(RegExp(r'\s+'), ' '),
+      'What is it about? Optional',
+    );
+    expect(
+      [
+        for (final Element chip in form.querySelectorAll('label.chip'))
+          chip.text.trim(),
+      ],
+      [
+        'An existing tool or app',
+        'An app or website built for you',
+        'Anything else',
+      ],
+    );
+    expect(
+      [
+        for (final Element label in form.querySelectorAll('.field label'))
+          label.text,
+      ],
+      ['Name', 'Email', 'Message'],
+    );
+    expect(form.querySelector('button[type="submit"]')!.text, 'Send message');
+  });
+
+  test('the contact form posts to the contact page, and works with no '
+      'script', () async {
+    final Document contact = await rendered(.contact);
+    final Element form = contact.getElementById(ContactForm.id)!;
+    expect(form.localName, 'form');
+    expect(form.attributes['action'], Page.contact.path.value);
+    expect(form.attributes['method'], 'post');
+    expect(form.attributes, isNot(contains('novalidate')));
+    // The alert and the panel wait on a send, so the form stands alone.
+    expect(
+      contact.getElementById(ContactForm.failedId)!.attributes,
+      containsPair('hidden', ''),
+    );
+    expect(
+      contact.getElementById(SentPanel.id)!.attributes,
+      containsPair('hidden', ''),
+    );
+    expect(
+      contact.getElementById(ContactForm.failedId)!.attributes['role'],
+      'alert',
+    );
+  });
+
+  test('every field is required, labelled, and checked by the browser '
+      'itself', () async {
+    final Element form = (await rendered(.contact))
+        .getElementById(ContactForm.id)!;
+    for (final ContactField field in ContactField.values) {
+      final Element control = form.querySelector('[name="${field.name}"]')!;
+      expect(control.id, field.id, reason: field.name);
+      expect(control.attributes, contains('required'), reason: field.name);
+      expect(
+        control.attributes['maxlength'],
+        '${field.maxLength}',
+        reason: field.name,
+      );
+      expect(
+        form.querySelector('label[for="${field.id}"]')?.text,
+        field.label,
+        reason: field.name,
+      );
+    }
+    expect(
+      form.querySelector('[name="${ContactField.email.name}"]')!.attributes,
+      containsPair('type', 'email'),
+    );
+    expect(
+      form.querySelector('[name="${ContactField.message.name}"]')!.localName,
+      'textarea',
+    );
+  });
+
+  test('the topic is optional, one of its chips at most, each sending its '
+      'words', () async {
+    final List<Element> radios = (await rendered(.contact))
+        .querySelectorAll('input[name="${Topic.fieldName}"]');
+    expect(
+      [
+        for (final Element radio in radios)
+          (radio.attributes['type'], radio.attributes['value']),
+      ],
+      [for (final Topic topic in Topic.values) ('radio', topic.label)],
+    );
+    expect(
+      radios.where((radio) => radio.attributes.containsKey('required')),
+      isEmpty,
+    );
+  });
+
+  test("the contact page offers Dan's address as the way round the form, "
+      'and the sent panel the way on', () async {
+    final Document contact = await rendered(.contact);
+    expect(_hrefs(contact.querySelector('main .contact-row:last-child')!), [
+      Elsewhere.email.href,
+    ]);
+    expect(_hrefs(contact.getElementById(ContactForm.failedId)!), [
+      Elsewhere.email.href,
+    ]);
+    expect(_hrefs(contact.getElementById(SentPanel.id)!), [
+      Page.contact.path.value,
+      Page.home.path.value,
     ]);
   });
 
@@ -156,7 +307,7 @@ void main() {
           script.attributes['src']!,
       ];
       expect(styles, ['/site.css']);
-      expect(scripts, ['/theme.js']);
+      expect(scripts, ['/theme.js', if (page == .contact) '/contact.js']);
       for (final String file in [...styles, ...scripts]) {
         expect(servedFile(siteOrigin.resolve(file)).existsSync(), isTrue);
       }
@@ -216,6 +367,31 @@ void main() {
         expect(stamp.children.map((Element child) => child.className), [
           'logo',
         ]);
+      },
+    );
+
+    test("the $page page's header leads to the contact page, marked as "
+        'current there alone', () async {
+      final Element nav = (await rendered(page)).querySelector('header nav')!;
+      final Element contact = nav
+          .querySelectorAll('a')
+          .singleWhere((Element link) => link.text == 'Contact');
+      expect(contact.attributes['href'], Page.contact.path.value);
+      expect(
+        [
+          for (final Element link in nav.querySelectorAll('[aria-current]'))
+            (link.text, link.attributes['aria-current']),
+        ],
+        [if (page == .contact) ('Contact', 'page')],
+      );
+    });
+
+    test(
+      "the $page page's footer carries no contact line of its own",
+      () async {
+        final Element footer = (await rendered(page)).querySelector('footer')!;
+        expect(footer.text, isNot(contains(emailAddress)));
+        expect(footer.querySelectorAll('a[href^="mailto:"]'), isEmpty);
       },
     );
 
