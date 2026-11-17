@@ -1,9 +1,10 @@
-import 'package:glados/glados.dart';
+import 'package:grit/grit.dart';
 import 'package:html/dom.dart';
 import 'package:lewis_software/elsewhere.dart';
 import 'package:lewis_software/page.dart';
 import 'package:lewis_software/site_path.dart';
 import 'package:lewis_software/tool.dart';
+import 'package:test/test.dart';
 
 import 'rendered_page.dart';
 
@@ -14,9 +15,10 @@ void main() {
     for (final Page page in Page.values) page.path,
   };
 
-  Glados(any.choose(Page.values)).test(
+  property(
     "Every link between the site's pages leads to a page the build wrote.",
-    (Page page) async {
+    (draw) async {
+      final Page page = draw(.element(Page.values), label: 'page');
       final Uri address = siteOrigin.resolve(page.path.value);
       final Document document = await rendered(page);
       final List<Uri> links = [
@@ -44,10 +46,11 @@ void main() {
     if (Tool.anyOnPub) Elsewhere.pubPublisher.href,
   };
 
-  Glados(any.choose(Page.values)).test(
+  property(
     "Every pub.dev link a page shows is a published tool's package, or the "
     'publisher while a tool is published.',
-    (Page page) async {
+    (draw) async {
+      final Page page = draw(.element(Page.values), label: 'page');
       final Document document = await rendered(page);
       for (final Element link in document.querySelectorAll('a[href]')) {
         final String href = link.attributes['href']!;

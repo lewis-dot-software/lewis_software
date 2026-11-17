@@ -1,6 +1,7 @@
-import 'package:glados/glados.dart';
+import 'package:grit/grit.dart';
 import 'package:html/dom.dart';
 import 'package:lewis_software/page.dart';
+import 'package:test/test.dart';
 
 import 'rendered_page.dart';
 
@@ -69,10 +70,11 @@ Iterable<Uri> _fetchedByFile(Uri url) => _urlInFile
 void main() {
   setUpAll(initialiseJaspr);
 
-  Glados(any.choose(Page.values)).test(
+  property(
     "Every page the build writes requests nothing from any host but the site's "
     'own.',
-    (Page page) async {
+    (draw) async {
+      final Page page = draw(.element(Page.values), label: 'page');
       final List<Uri> fetched = _fetchedByElements(await rendered(page), page);
       expect(fetched, isNotEmpty, reason: 'the page loads its own files');
       // Each own file is read in turn for what it fetches, so a fetch nested
