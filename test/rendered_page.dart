@@ -9,7 +9,7 @@ import 'package:lewis_software/page.dart';
 import 'package:lewis_software/site.dart';
 
 /// The origin the site is served from.
-final Uri siteOrigin = Uri.parse('https://lewis.software');
+final Uri siteOrigin = .parse('https://lewis.software');
 
 /// Whether [url] is on the site's own origin.
 bool isOwn(Uri url) =>
@@ -22,10 +22,10 @@ void initialiseJaspr() => Jaspr.initializeApp(options: defaultServerOptions);
 Future<Document> rendered(Page page) async {
   final ResponseLike response = await renderComponent(
     const Site(),
-    request: Request('GET', siteOrigin.resolve(page.path.value)),
+    request: .new('GET', siteOrigin.resolve(page.path.value)),
   );
   return parse(utf8.decode(response.body));
 }
 
 /// The file in `web/` the build serves at [url], one of the site's own.
-File servedFile(Uri url) => File('web${url.path}');
+File servedFile(Uri url) => .new('web${url.path}');

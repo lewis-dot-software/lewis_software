@@ -3,13 +3,13 @@ import 'site_path.dart';
 /// A page the build writes, at the path it is written to.
 enum Page {
   /// The home page.
-  home(path: SitePath('/')),
+  home(path: .new('/')),
 
   /// The page whose form sends Dan a message.
-  contact(path: SitePath('/contact')),
+  contact(path: .new('/contact')),
 
   /// The page saying no page stands at the reader's path.
-  notFound(path: SitePath('/404.html'));
+  notFound(path: .new('/404.html'));
 
   const Page({required this.path});
 

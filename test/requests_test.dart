@@ -48,14 +48,14 @@ List<Uri> _fetchedByElements(Document document, Page page) => [
 
 /// A URL written in a stylesheet, a script or an image: absolute with a
 /// scheme or protocol-relative, a CSS `url()`, or a CSS `@import`'s string.
-final RegExp _urlInFile = RegExp(
+final RegExp _urlInFile = .new(
   r'''([a-z][a-z0-9+.-]*:)?//[^\s'"`)]+|url\(\s*['"]?([^'")\s]+)|@import\s+['"]([^'"]+)''',
   caseSensitive: false,
 );
 
 /// An XML namespace declaration, whose URI names the namespace and is never
 /// fetched.
-final RegExp _namespace = RegExp(
+final RegExp _namespace = .new(
   r'''\sxmlns(:[a-z][\w.-]*)?\s*=\s*("[^"]*"|'[^']*')''',
 );
 

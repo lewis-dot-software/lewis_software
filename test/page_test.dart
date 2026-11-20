@@ -1,6 +1,5 @@
 import 'package:grit/grit.dart';
 import 'package:lewis_software/page.dart';
-import 'package:lewis_software/site_path.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -15,8 +14,8 @@ void main() {
       .string(alphabet: .lettersAndDigits, minLength: 1),
       label: 'name',
     );
-    expect(Page.at(SitePath('/$name')), Page.notFound);
-    expect(Page.at(SitePath('/$name.html')), Page.notFound);
-    expect(Page.at(SitePath('/$name/')), Page.notFound);
+    expect(Page.at(.new('/$name')), Page.notFound);
+    expect(Page.at(.new('/$name.html')), Page.notFound);
+    expect(Page.at(.new('/$name/')), Page.notFound);
   });
 }

@@ -27,10 +27,10 @@ void main() {
       ];
       expect(links.where(isOwn), isNotEmpty, reason: '$page links the site');
       for (final Uri link in links.where(isOwn)) {
-        final SitePath target = SitePath(link.path);
+        final SitePath target = .new(link.path);
         expect(written, contains(target), reason: '$page links $link');
         if (link.fragment.isNotEmpty) {
-          final Document landing = await rendered(Page.at(target));
+          final Document landing = await rendered(.at(target));
           expect(
             landing.getElementById(link.fragment),
             isNotNull,

@@ -6,7 +6,6 @@ import 'home_page.dart';
 import 'not_found_page.dart';
 import 'page.dart';
 import 'site_header.dart';
-import 'site_path.dart';
 
 /// The whole document of lewis.software at the requested path: its head and
 /// its body.
@@ -22,7 +21,7 @@ final class Site extends AsyncStatelessComponent {
       for (final Page page in Page.values)
         ServerApp.requestRouteGeneration(page.path.value),
     ]);
-    final Page page = Page.at(SitePath(Uri.parse(context.url).path));
+    final Page page = .at(.new(Uri.parse(context.url).path));
     return Document(
       lang: 'en-GB',
       title: switch (page) {

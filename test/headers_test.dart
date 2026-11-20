@@ -21,7 +21,7 @@ Map<String, String> _everyPathHeaders() {
 }
 
 /// One directive of a policy: its name, then its value after any `=`.
-final RegExp _directive = RegExp(r'^([a-z-]+)[\s=]*(.*)$');
+final RegExp _directive = .new(r'^([a-z-]+)[\s=]*(.*)$');
 
 /// The directives of a policy split by [separator], each name to its value.
 Map<String, String> _directives(String policy, String separator) => {

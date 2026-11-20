@@ -28,13 +28,13 @@ const Set<String> _mocha = {
 const String _colour = r'#[0-9a-f]{6}|rgb\([^)]*\)';
 
 /// Any colour written by value: hex of any length, or a colour function.
-final RegExp _anyColour = RegExp(
+final RegExp _anyColour = .new(
   r'#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(',
   caseSensitive: false,
 );
 
 /// A `light-dark()` pair: its light colour, then its dark.
-final RegExp _pair = RegExp(
+final RegExp _pair = .new(
   'light-dark\\(\\s*($_colour)\\s*,\\s*($_colour)\\s*\\)',
   caseSensitive: false,
 );
