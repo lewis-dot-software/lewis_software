@@ -9,7 +9,9 @@ void main() {
     }
   });
 
-  property('a path no page is written to finds the not-found page', (draw) {
+  property('PAG-4: A path no page is written to finds the not-found page.', (
+    draw,
+  ) {
     final String name = draw(
       .string(alphabet: .lettersAndDigits, minLength: 1),
       label: 'name',

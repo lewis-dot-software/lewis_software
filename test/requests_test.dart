@@ -71,8 +71,8 @@ void main() {
   setUpAll(initialiseJaspr);
 
   property(
-    "Every page the build writes requests nothing from any host but the site's "
-    'own.',
+    "PAG-1: Every page the build writes requests nothing from any host but "
+    "the site's own.",
     (draw) async {
       final Page page = draw(.element(Page.values), label: 'page');
       final List<Uri> fetched = _fetchedByElements(await rendered(page), page);

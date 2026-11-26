@@ -4,6 +4,10 @@ lewis_software is the source of lewis.software, my home on the web and the publi
 
 <!-- office doc index -->
 
+## Docs
+
+- [Property index](docs/property-index.md) - Every property the code holds, each by its number beside its property test, and its Lean declaration where it is proved.
+
 <!-- /office doc index -->
 
 ## AI usage

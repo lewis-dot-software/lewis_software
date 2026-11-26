@@ -16,7 +16,8 @@ void main() {
   };
 
   property(
-    "Every link between the site's pages leads to a page the build wrote.",
+    "PAG-2: Every link between the site's pages leads to a page the build "
+    'wrote.',
     (draw) async {
       final Page page = draw(.element(Page.values), label: 'page');
       final Uri address = siteOrigin.resolve(page.path.value);
@@ -47,8 +48,8 @@ void main() {
   };
 
   property(
-    "Every pub.dev link a page shows is a published tool's package, or the "
-    'publisher while a tool is published.',
+    "PAG-3: Every pub.dev link a page shows is a published tool's package, or "
+    'the publisher while a tool is published.',
     (draw) async {
       final Page page = draw(.element(Page.values), label: 'page');
       final Document document = await rendered(page);
